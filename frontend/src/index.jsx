@@ -14,7 +14,8 @@ import App from "./App"
 import reportWebVitals from "./reportWebVitals"
 import HomeScreen from "./screens/HomeScreen"
 import LoginScreen from "./screens/LoginScreen"
-import RegisterScreen from "./screens/RegisterScreen"
+import RegisterScreen from "./screens/admin/RegisterScreen"
+import RestaurantInfoEditScreen from "./screens/admin/RestaurantInfoEditScreen"
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,6 +23,7 @@ const router = createBrowserRouter(
       <Route index={true} path="/" element={<HomeScreen />} />
       <Route path="/login" element={<LoginScreen />} />
       <Route path="/register" element={<RegisterScreen />} />
+      <Route path="/editRestaurant" element={<RestaurantInfoEditScreen />} />
     </Route>
   )
 )

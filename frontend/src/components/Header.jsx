@@ -17,6 +17,11 @@ const Header = () => {
                   <FaUser /> Sign In
                 </Nav.Link>
               </LinkContainer>
+              <LinkContainer to="/editRestaurant">
+                <Nav.Link>
+                  <FaUser /> Cập Nhật Thông Tin Nhà Hàng
+                </Nav.Link>
+              </LinkContainer>
             </Nav>
           </Navbar.Collapse>
         </Container>
