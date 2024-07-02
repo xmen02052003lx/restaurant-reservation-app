@@ -12,11 +12,13 @@ import store from "./store"
 import "./assets/styles/bootstrap.custom.css"
 import App from "./App"
 import reportWebVitals from "./reportWebVitals"
+import ManagerRoute from "./components/ManagerRoute"
 import HomeScreen from "./screens/HomeScreen"
 import LoginScreen from "./screens/LoginScreen"
 import RegisterScreen from "./screens/admin/RegisterScreen"
 import RestaurantInfoEditScreen from "./screens/admin/RestaurantInfoEditScreen"
 import MenuScreen from "./screens/MenuScreen"
+import MenuCreateScreen from "./screens/admin/MenuCreateScreen"
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -24,8 +26,15 @@ const router = createBrowserRouter(
       <Route index={true} path="/" element={<HomeScreen />} />
       <Route path="/login" element={<LoginScreen />} />
       <Route path="/register" element={<RegisterScreen />} />
-      <Route path="/editRestaurant" element={<RestaurantInfoEditScreen />} />
       <Route path="/menu" element={<MenuScreen />} />
+      {/* Manager users */}
+      <Route path="" element={<ManagerRoute />}>
+        <Route
+          path="/manager/editrestaurant"
+          element={<RestaurantInfoEditScreen />}
+        />
+        <Route path="/manager/createmenu" element={<MenuCreateScreen />} />
+      </Route>
     </Route>
   )
 )

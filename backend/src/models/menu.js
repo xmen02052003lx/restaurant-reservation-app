@@ -1,31 +1,31 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
 
 const MenuSchema = new mongoose.Schema({
   dish_code: {
-    type: String,
+    type: String
   },
   name: {
-    type: String,
+    type: String
   },
   category: {
-    type: Number,
+    type: String
   },
   description: {
-    type: String,
+    type: String
   },
   unit: {
-    type: String,
+    type: String
   },
   price: {
-    type: Number,
+    type: Number
   },
   discount: {
-    type: String,
+    type: String
   },
   image: {
     data: Buffer,
-    contentType: String,
-  },
-});
+    contentType: String
+  }
+})
 
-module.exports = mongoose.model("Menu", MenuSchema);
+module.exports = mongoose.model("Menu", MenuSchema)

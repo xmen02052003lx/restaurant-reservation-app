@@ -1,5 +1,5 @@
 import { Navbar, Nav, Container, Badge, NavDropdown } from "react-bootstrap"
-import { FaShoppingCart, FaUser } from "react-icons/fa"
+import { FaShoppingCart, FaUser, FaBookOpen } from "react-icons/fa"
 import { LinkContainer } from "react-router-bootstrap"
 import { useSelector, useDispatch } from "react-redux" // useDispatch is used to interact with our state's actions, and useSelector is used to access our state in the store.js
 import { useNavigate } from "react-router-dom"
@@ -30,6 +30,11 @@ const Header = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
+              <LinkContainer to="/menu">
+                <Nav.Link>
+                  <FaBookOpen /> Menu
+                </Nav.Link>
+              </LinkContainer>
               <LinkContainer to="/cart">
                 <Nav.Link>
                   <FaShoppingCart /> Giỏ hàng
