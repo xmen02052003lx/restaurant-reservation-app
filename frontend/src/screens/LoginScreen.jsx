@@ -10,30 +10,33 @@ import { setCredentials } from "../slices/authSlice"
 import { toast } from "react-toastify"
 
 const LoginScreen = () => {
-  const [email, setEmail] = useState("")
+  const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch() // useDispatch: dispatch actions such as the login in that slice and the set credentials
   const navigate = useNavigate()
 
   const [login, { isLoading }] = useLoginMutation()
 
-  //   const { userInfo } = useSelector(state => state.auth)
+  const { userInfo } = useSelector(state => state.auth) // useSelector: get stuff from the state
 
   const { search } = useLocation()
-  const sp = new URLSearchParams(search)
+  const sp = new URLSearchParams(search) // sp: search params
   const redirect = sp.get("redirect") || "/"
 
-  //   useEffect(() => {
-  //     if (userInfo) {
-  //       navigate(redirect)
-  //     }
-  //   }, [navigate, redirect, userInfo])
+  useEffect(() => {
+    // check to see if we are logged in
+    // if userInfo in local storage
+    if (userInfo) {
+      // navigate to whatever inside the "rediect"param (redirect=...)
+      navigate(redirect)
+    }
+  }, [navigate, redirect, userInfo])
 
   const submitHandler = async e => {
     e.preventDefault()
     try {
-      const res = await login({ email, password }).unwrap()
+      const res = await login({ username, password }).unwrap()
       dispatch(setCredentials({ ...res }))
       navigate(redirect)
     } catch (err) {
@@ -51,8 +54,8 @@ const LoginScreen = () => {
           <Form.Control
             type="email"
             placeholder="Enter email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
+            value={username}
+            onChange={e => setUsername(e.target.value)}
           ></Form.Control>
         </Form.Group>
 
@@ -66,7 +69,12 @@ const LoginScreen = () => {
           ></Form.Control>
         </Form.Group>
 
-        <Button disabled={isLoading} type="submit" variant="primary">
+        <Button
+          disabled={isLoading}
+          type="submit"
+          variant="primary"
+          className="mt-3"
+        >
           Sign In
         </Button>
 

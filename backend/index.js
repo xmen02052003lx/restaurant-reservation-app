@@ -1,10 +1,15 @@
-const express = require('express');
-const app = express();
-const morgan = require('morgan');
-const bodyParser = require('body-parser');
-const Router = require('./src/routers/index')
-app.use(morgan("combined"));
-app.use(bodyParser.json());
+const connectdb = require("./src/helpers/db")
+const express = require("express")
+const cors = require("cors")
+const app = express()
+const morgan = require("morgan")
+const bodyParser = require("body-parser")
+const Router = require("./src/routers/index")
+app.use(cors())
+app.use(morgan("combined"))
+app.use(bodyParser.json())
 app.use(Router)
+
+connectdb()
 // connectToDB();
-app.listen(3000)
+app.listen(5000)

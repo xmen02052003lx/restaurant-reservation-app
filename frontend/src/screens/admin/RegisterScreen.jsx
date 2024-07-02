@@ -10,8 +10,7 @@ import { setCredentials } from "../../slices/authSlice"
 import { toast } from "react-toastify"
 
 const RegisterScreen = () => {
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
+  const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
 
@@ -20,17 +19,17 @@ const RegisterScreen = () => {
 
   const [register, { isLoading }] = useRegisterMutation()
 
-  //   const { userInfo } = useSelector((state) => state.auth);
+  const { userInfo } = useSelector(state => state.auth)
 
   const { search } = useLocation()
   const sp = new URLSearchParams(search)
   const redirect = sp.get("redirect") || "/"
 
-  //   useEffect(() => {
-  //     if (userInfo) {
-  //       navigate(redirect);
-  //     }
-  //   }, [navigate, redirect, userInfo]);
+  useEffect(() => {
+    if (userInfo) {
+      navigate(redirect)
+    }
+  }, [navigate, redirect, userInfo])
 
   const submitHandler = async e => {
     e.preventDefault()
@@ -39,7 +38,7 @@ const RegisterScreen = () => {
       toast.error("Passwords do not match")
     } else {
       try {
-        const res = await register({ name, email, password }).unwrap()
+        const res = await register({ username, password }).unwrap()
         dispatch(setCredentials({ ...res }))
         navigate(redirect)
       } catch (err) {
@@ -53,22 +52,12 @@ const RegisterScreen = () => {
       <h1>Register</h1>
       <Form onSubmit={submitHandler}>
         <Form.Group className="my-2" controlId="name">
-          <Form.Label>Name</Form.Label>
-          <Form.Control
-            type="name"
-            placeholder="Enter name"
-            value={name}
-            onChange={e => setName(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
-
-        <Form.Group className="my-2" controlId="email">
-          <Form.Label>Email Address</Form.Label>
+          <Form.Label>Username</Form.Label>
           <Form.Control
             type="email"
-            placeholder="Enter email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
+            placeholder="Enter username"
+            value={username}
+            onChange={e => setUsername(e.target.value)}
           ></Form.Control>
         </Form.Group>
 
@@ -91,7 +80,12 @@ const RegisterScreen = () => {
           ></Form.Control>
         </Form.Group>
 
-        <Button disabled={isLoading} type="submit" variant="primary">
+        <Button
+          className="mt-2"
+          disabled={isLoading}
+          type="submit"
+          variant="primary"
+        >
           Register
         </Button>
 
