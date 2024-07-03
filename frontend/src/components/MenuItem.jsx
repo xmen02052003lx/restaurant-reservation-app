@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Card, Form, Button } from "react-bootstrap"
 import { Link } from "react-router-dom"
 const MenuItem = ({ menu }) => {
+  const [qty, setQty] = useState(0)
   const imageUrl = `data:${menu.image.contentType};base64,${menu.image.data}`
 
   return (
@@ -17,6 +18,19 @@ const MenuItem = ({ menu }) => {
         </Link>
         <Card.Text as="div">{menu.description}</Card.Text>
         <Card.Text as="h3">${menu.price}</Card.Text>
+        <Form>
+          <Form.Group controlId="qty">
+            <Form.Label>Số lượng</Form.Label>
+            <Form.Control
+              name="qty"
+              type="number"
+              placeholder="Nhập số lượng"
+              value={qty}
+              onChange={e => setQty(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
+        </Form>
+        <Button>Chọn</Button>
       </Card.Body>
     </Card>
   )
