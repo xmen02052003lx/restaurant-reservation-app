@@ -13,7 +13,7 @@ const createMenu = async (req, res) => {
     price,
     discount,
     image: {
-      data: req.file.buffer,
+      data: req.file.buffer.toString("base64"),
       contentType: req.file.mimetype
     }
   })
@@ -31,7 +31,7 @@ const menuList = async (req, res) => {
     const items = await menu.find()
     res.json(items)
   } catch (err) {
-    res.status(500).send(err)
+    res.status(500).json({ message: "Error!" })
   }
 }
 

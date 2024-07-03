@@ -23,7 +23,7 @@ const MenuSchema = new mongoose.Schema({
     type: String
   },
   image: {
-    data: Buffer,
+    data: String,
     contentType: String
   }
 })

@@ -5,11 +5,10 @@ export const productsApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     // with this, we dont need to use fetch/axios (which is cool in my opinion)
     getMenu: builder.query({
-      query: ({ keyword, pageNumber }) => ({
+      query: () => ({
         // because we want this arrow function return an object so: ({....})
         // this is a query so GET request
-        url: MENU_URL,
-        params: { keyword, pageNumber }
+        url: MENU_URL
       }),
       keepUnusedDataFor: 5,
       providesTags: ["Products"]

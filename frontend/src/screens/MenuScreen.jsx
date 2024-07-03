@@ -1,15 +1,16 @@
 import { useParams, Link } from "react-router-dom"
 import { Table, Button, Row, Col } from "react-bootstrap"
-import { FaEdit, FaPlus, FaTrash } from "react-icons/fa"
+import { FaDeaf, FaEdit, FaPlus, FaTrash } from "react-icons/fa"
 import { useDispatch, useSelector } from "react-redux"
 import { LinkContainer } from "react-router-bootstrap"
 import Loader from "../components/Loader"
 import Message from "../components/Message"
 import MenuItem from "../components/MenuItem"
-
-const HomeScreen = () => {
+import { useGetMenuQuery } from "../slices/menuApiSlice"
+const MenuScreen = () => {
   const { userInfo } = useSelector(state => state.auth)
 
+  const { data, isLoading, error } = useGetMenuQuery()
   return (
     <>
       <Link to="/" className="btn btn-light mb-4">
@@ -27,11 +28,17 @@ const HomeScreen = () => {
       )}
 
       <Row className="align-items-center">
-        <Col sm={12} md={6} lg={4} xl={3}>
-          <MenuItem />
-        </Col>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          data.map(product => (
+            <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+              <MenuItem menu={product} />
+            </Col>
+          ))
+        )}
       </Row>
     </>
   )
 }
-export default HomeScreen
+export default MenuScreen
