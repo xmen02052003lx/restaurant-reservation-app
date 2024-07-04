@@ -28,7 +28,7 @@ const authentication = async (req, res, next) => {
     const userId = checkToken.id
     next()
   } catch (error) {
-    return res.status(401).json({ message: "Bạn chưa đăng nhập" })
+    return res.status(401).json(error)
   }
 }
 const login = async (req, res) => {
@@ -53,7 +53,7 @@ const login = async (req, res) => {
       res.json({ token, username })
     }
   } catch (error) {
-    res.status(500).json({ error: error.message })
+    res.status(500).json(error)
   }
 }
 
@@ -68,7 +68,7 @@ const register = async (req, res) => {
       res.status(201).json({ username, message: "Đăng ký thành công" })
     }
   } catch (error) {
-    res.status(500).json({ error: error.message })
+    res.status(500).json(error)
   }
 }
 

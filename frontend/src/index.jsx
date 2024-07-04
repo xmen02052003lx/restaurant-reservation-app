@@ -10,6 +10,7 @@ import { Provider } from "react-redux"
 import store from "./store"
 // import "bootstrap/dist/css/bootstrap.min.css"
 import "./assets/styles/bootstrap.custom.css"
+import "react-datepicker/dist/react-datepicker.css"
 import App from "./App"
 import reportWebVitals from "./reportWebVitals"
 import ManagerRoute from "./components/ManagerRoute"
@@ -19,6 +20,8 @@ import RegisterScreen from "./screens/admin/RegisterScreen"
 import RestaurantInfoEditScreen from "./screens/admin/RestaurantInfoEditScreen"
 import MenuScreen from "./screens/MenuScreen"
 import MenuCreateScreen from "./screens/admin/MenuCreateScreen"
+import BookingScreen from "./screens/BookingScreen"
+import TableListScreen from "./screens/admin/TableListScreen"
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,6 +30,7 @@ const router = createBrowserRouter(
       <Route path="/login" element={<LoginScreen />} />
       <Route path="/register" element={<RegisterScreen />} />
       <Route path="/menu" element={<MenuScreen />} />
+      <Route path="/booking" element={<BookingScreen />} />
       {/* Manager users */}
       <Route path="" element={<ManagerRoute />}>
         <Route
@@ -34,6 +38,7 @@ const router = createBrowserRouter(
           element={<RestaurantInfoEditScreen />}
         />
         <Route path="/manager/createmenu" element={<MenuCreateScreen />} />
+        <Route path="/manager/tablelist" element={<TableListScreen />} />
       </Route>
     </Route>
   )

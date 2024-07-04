@@ -12,13 +12,6 @@ import {
 } from "../../slices/menuApiSlice"
 
 const ProductEditScreen = () => {
-  //   const [dish_code, setDish_code] = useState("")
-  //   const [name, setName] = useState("")
-  //   const [category, setCategory] = useState("")
-  //   const [description, setDescription] = useState("")
-  //   const [unit, setUnit] = useState("")
-  //   const [price, setPrice] = useState(0)
-  //   const [discount, setDiscount] = useState("")
   const [image, setImage] = useState(null)
 
   const [formData, setFormData] = useState({
@@ -71,7 +64,7 @@ const ProductEditScreen = () => {
         Go Back
       </Link>
       <FormContainer>
-        <h1>Edit Product</h1>
+        <h1>Tạo Món Mới</h1>
         {loadingUpdate && <Loader />}
 
         <Form onSubmit={handleSubmit}>
