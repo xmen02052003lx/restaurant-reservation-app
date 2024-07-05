@@ -4,11 +4,11 @@ import { apiSlice } from "./apiSlice" // this slice dealding with asynchronous r
 export const productsApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     // with this, we dont need to use fetch/axios (which is cool in my opinion)
-    getBooking: builder.query({
+    getBookings: builder.query({
       query: () => ({
         // because we want this arrow function return an object so: ({....})
         // this is a query so GET request
-        url: BOOKING_URL
+        url: `${BOOKING_URL}/list`
       }),
       keepUnusedDataFor: 5,
       providesTags: ["Products"]
@@ -54,4 +54,5 @@ export const productsApiSlice = apiSlice.injectEndpoints({
 
 // this is a convention: when it is a query => "use" + query's name + "Query"
 // this is what we bring into our component whenever we want to use this and fetch our data
-export const { useCreateBookingMutation } = productsApiSlice
+export const { useGetBookingsQuery, useCreateBookingMutation } =
+  productsApiSlice
