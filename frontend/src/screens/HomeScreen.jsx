@@ -109,11 +109,9 @@ const HomeScreen = () => {
           </Col>
           <Col xl={6} className="service">
             <div>
-              <h2>
-                <PiChefHatThin color="orange" />
-                VỀ DỊCH VỤ CỦA CHÚNG TÔI
-              </h2>
-              <h3>Vẻ đẹp nghệ thuật trong dịch vụ của chúng tôi</h3>
+              <h3 className="specialities">
+                <PiChefHatThin color="orange" /> Vẻ đẹp nghệ thuật trong dịch vụ
+              </h3>
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Reiciendis maxime harum maiores consequatur amet architecto
@@ -123,12 +121,14 @@ const HomeScreen = () => {
             <Container>
               <Row>
                 <Col md={6}>
-                  <Row>
+                  <Row className="">
                     <Col md={3} className="p-0">
                       <IoFastFoodOutline color="orange" size={70} />
                     </Col>
-                    <Col md={9} xs={12} className="">
-                      <p className="mb-1">Chất lượng Thực phẩm tổt nhất</p>
+                    <Col md={9} xs={12} className="column-with-border">
+                      <p className="mb-1 sub-specialities">
+                        Chất lượng Thực phẩm tổt nhất
+                      </p>
                       <p>Phong cách trang trí nghệ thuật</p>
                     </Col>
                   </Row>
@@ -139,7 +139,9 @@ const HomeScreen = () => {
                       <SiCodechef color="orange" size={70} />
                     </Col>
                     <Col md={9} className="">
-                      <p className="mb-1">Đầu bếp chuyên nghiệp</p>
+                      <p className="mb-1 sub-specialities">
+                        Đầu bếp chuyên nghiệp
+                      </p>
                       <p>Thực hiện món ăn của bạn</p>
                     </Col>
                   </Row>
@@ -164,7 +166,7 @@ const HomeScreen = () => {
         </Col>
       </Row>
       <Container className="mb-5">
-        <h2 className="text-center mb-5">Đặc Sản</h2>
+        <h2 className="text-center mb-5 specialities">Đặc Sản</h2>
         <Row>
           <Col md={6}>
             <Row>

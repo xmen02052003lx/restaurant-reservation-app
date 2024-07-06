@@ -39,6 +39,60 @@ body {
   transform: translate(-50%, -50%);
   color: white;
 }
+
+.specialities {
+  font-size: 3.3em;
+  color: #2d2d2d;
+  font-weight: 300;
+}
+
+.sub-specialities {
+  font-size: 1.5em;
+  color: #2d2d2d;
+  font-weight: 500;
+}
+
+.column-with-border {
+  position: relative; /* Ensure relative positioning for absolute elements */
+}
+
+.column-with-border::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 1px; /* Adjust thickness of the line */
+  background-color: #ccc; /* Color of the vertical line */
+}
+
+.columns-with-lines {
+  margin-left: -1px; /* Adjust margin to align with borders */
+}
+
+.column-with-lines {
+  position: relative; /* Ensure relative positioning for absolute elements */
+  padding-left: 15px; /* Adjust padding for column content */
+}
+
+.column-with-lines::before,
+.column-with-lines::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px; /* Adjust thickness of the line */
+  background-color: #ccc; /* Color of the vertical line */
+}
+
+.column-with-lines::before {
+  left: 0; /* Vertical line on the left side of the column */
+}
+
+.column-with-lines::after {
+  right: 0; /* Vertical line on the right side of the column */
+}
+
 h1 {
   margin: 0;
 }
@@ -230,6 +284,10 @@ h1 {
   }
   .block-superior::before {
     width: 100%;
+  }
+
+  .column-with-border::after {
+    display: none; /* Hide the vertical line on smaller screens if needed */
   }
 } /* Media query for smaller screens */
 @media (max-width: 1200px) {
