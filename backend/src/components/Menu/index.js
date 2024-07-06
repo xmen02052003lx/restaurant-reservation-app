@@ -74,9 +74,14 @@ const menuUpdate = async (req, res) => {
   }
 }
 
+const pickup = async (req, res) => {
+  console.log(req.body)
+}
+
 module.exports = {
   createMenu,
   menuList,
   menuDelete,
-  menuUpdate
+  menuUpdate,
+  pickup
 }

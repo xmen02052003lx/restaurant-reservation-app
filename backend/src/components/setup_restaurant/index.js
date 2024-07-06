@@ -19,7 +19,7 @@ const updateRestaurantInfo = async (req, res) => {
   
     try {
       const restaurant = await Restaurant.findByIdAndUpdate(req.params.id, updateData, { new: true });
-      res.json(restaurant);
+      res.status(201).json({ message: "Cập nhật thông tin thành công!", data: restaurant })
     } catch (err) {
       res.status(500).send(err);
     }
