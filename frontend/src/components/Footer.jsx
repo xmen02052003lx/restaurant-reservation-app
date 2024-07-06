@@ -7,11 +7,14 @@ const Footer = () => {
     <footer>
       <Container>
         <Row>
-          <Col className="text-center py-3">
-            <p>&copy; {currentYear} Gogi. All rights reserved</p>
-          </Col>
+          <Col md={4}>Theo doi chung toi tai :</Col>
+          <Col md={4}>Lien he chung toi :</Col>
+          <Col md={4}>HOME, ABOUT US,....</Col>
         </Row>
       </Container>
+      <p className="text-center">
+        &copy; {currentYear} Gogi. All rights reserved
+      </p>
     </footer>
   )
 }
