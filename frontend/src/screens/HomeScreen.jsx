@@ -1,3 +1,4 @@
+import "./HomeScreen.css"
 import React from "react"
 import Rating from "../components/Rating"
 import restaturantImage from "../assets/hinhanhnhahang.jpg"
@@ -12,7 +13,6 @@ import vegetariansoup from "../assets/vegetariansoup.jpg"
 import thitca from "../assets/thitca.jpg"
 import steak from "../assets/steak.jpg"
 import rautuoi from "../assets/rautuoi.jpg"
-import "./HomeScreen.css"
 import Col from "react-bootstrap/Col"
 import Container from "react-bootstrap/Container"
 import Image from "react-bootstrap/Image"
@@ -21,6 +21,7 @@ import { TfiCheckBox } from "react-icons/tfi"
 import { PiChefHatThin } from "react-icons/pi"
 import { IoFastFoodOutline } from "react-icons/io5"
 import { SiCodechef } from "react-icons/si"
+import { LinkContainer } from "react-router-bootstrap"
 
 const HomeScreen = () => {
   return (
@@ -40,7 +41,9 @@ const HomeScreen = () => {
             <p className="mt-2" style={{ fontWeight: "500" }}>
               STEAK HOUSE
             </p>
-            <button className="custom-button mt-4">Đặt bàn</button>
+            <LinkContainer to="/booking">
+              <button className="custom-button mt-4">Đặt bàn</button>
+            </LinkContainer>
           </div>
         </div>
       </div>
@@ -54,7 +57,7 @@ const HomeScreen = () => {
         <Col md={6} xs={6}>
           <p className="text-end pe-4">
             <span className="fw-bold">EMAIL</span>
-            <span>: datban@restaurant.com</span>
+            <span>: steakhouse@gmail.com</span>
           </p>
         </Col>
       </Row>
@@ -79,12 +82,14 @@ const HomeScreen = () => {
                 </p>
               </Col>
             </Row>
-            <button
-              className="custom-button ms-5 mt-3"
-              style={{ fontWeight: "light" }}
-            >
-              Đặt bàn
-            </button>
+            <LinkContainer to="/booking">
+              <button
+                className="custom-button ms-5 mt-3"
+                style={{ fontWeight: "light" }}
+              >
+                Đặt bàn
+              </button>
+            </LinkContainer>
             <Row className="pt-5">
               <Col md={4} className="mb-3">
                 <Image src={thitca} fluid />
@@ -148,7 +153,9 @@ const HomeScreen = () => {
                 </Col>
               </Row>
             </Container>
-            <button className="custom-button mt-5">Đặt bàn</button>
+            <LinkContainer to="/booking">
+              <button className="custom-button mt-5">Đặt bàn</button>
+            </LinkContainer>
           </Col>
         </Row>
       </Container>
@@ -276,7 +283,9 @@ const HomeScreen = () => {
             </Row>
           </Col>
           <Col md={6}>
-            <button className="custom-button">Đặt bàn</button>
+            <LinkContainer to="/booking">
+              <button className="custom-button">Đặt bàn</button>
+            </LinkContainer>
           </Col>
         </Row>
       </Container>
