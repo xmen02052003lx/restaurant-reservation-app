@@ -22,54 +22,66 @@ const Header = () => {
 
   return (
     <header>
-      <Navbar bg="primary" variant="dark" expand="md" collapseOnSelect>
+      <Navbar
+        fixed="top"
+        // bg="white"
+        style={{
+          boxShadow: "4.0px 8.0px 8.0px hsl(0deg 0% 0% / 0.38)",
+          backgroundColor: "#111"
+        }}
+        expand="md"
+        collapseOnSelect
+      >
         <Container>
           <LinkContainer to="/">
-            <Navbar.Brand>GoGi</Navbar.Brand>
+            <Navbar.Brand>
+              <span style={{ color: "white" }}> Steak House</span>
+            </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="ms-auto">
+            <Nav className="me-auto">
               <LinkContainer to="/menu">
                 <Nav.Link>
-                  <FaBookOpen /> Menu
+                  <FaBookOpen color="white" />
+                  <span style={{ color: "white" }}> THỰC ĐƠN </span>
                 </Nav.Link>
               </LinkContainer>
               <LinkContainer to="/booking">
                 <Nav.Link>
-                  <FaTable /> Đặt Bàn
+                  <FaTable color="white" />{" "}
+                  <span style={{ color: "white" }}> ĐẶT BÀN </span>
                 </Nav.Link>
               </LinkContainer>
-              <LinkContainer to="/cart">
-                <Nav.Link>
-                  <FaShoppingCart /> Giỏ hàng
-                </Nav.Link>
-              </LinkContainer>
-              {userInfo ? (
-                <>
-                  <NavDropdown title={userInfo.username} id="username">
-                    <LinkContainer to="/profile">
-                      <NavDropdown.Item>Profile</NavDropdown.Item>
-                    </LinkContainer>
-                    <LinkContainer to="/manager/bookingslist">
-                      <NavDropdown.Item>Danh Sách Đặt Bàn</NavDropdown.Item>
-                    </LinkContainer>
-                    <LinkContainer to="/manager/tablelist">
-                      <NavDropdown.Item>Số Bàn</NavDropdown.Item>
-                    </LinkContainer>
-                    <NavDropdown.Item onClick={logoutHandler}>
-                      Logout
-                    </NavDropdown.Item>
-                  </NavDropdown>
-                </>
-              ) : (
-                <LinkContainer to="/login">
-                  <Nav.Link>
-                    <FaUser /> Đăng Nhập
-                  </Nav.Link>
-                </LinkContainer>
-              )}
             </Nav>
+            {userInfo ? (
+              <>
+                <NavDropdown
+                  style={{ color: "white" }}
+                  title={userInfo.username}
+                  id="username"
+                >
+                  <LinkContainer to="/profile">
+                    <NavDropdown.Item>Profile</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to="/manager/bookingslist">
+                    <NavDropdown.Item>Danh Sách Đặt Bàn</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to="/manager/tablelist">
+                    <NavDropdown.Item>Số Bàn</NavDropdown.Item>
+                  </LinkContainer>
+                  <NavDropdown.Item onClick={logoutHandler}>
+                    Logout
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </>
+            ) : (
+              <LinkContainer to="/login" style={{ color: "white" }}>
+                <Nav.Link>
+                  <FaUser /> Đăng Nhập
+                </Nav.Link>
+              </LinkContainer>
+            )}
           </Navbar.Collapse>
         </Container>
       </Navbar>

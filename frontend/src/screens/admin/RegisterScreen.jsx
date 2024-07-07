@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
-import { Form, Button, Row, Col } from "react-bootstrap"
+import { Form, Button, Row, Col, Nav } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import Loader from "../../components/Loader"
 import FormContainer from "../../components/FormContainer"
+import { LinkContainer } from "react-router-bootstrap"
 
 import { useRegisterMutation } from "../../slices/usersApiSlice"
 import { setCredentials } from "../../slices/authSlice"
@@ -48,59 +49,79 @@ const RegisterScreen = () => {
   }
 
   return (
-    <FormContainer>
-      <h1>Register</h1>
-      <Form onSubmit={submitHandler}>
-        <Form.Group className="my-2" controlId="name">
-          <Form.Label>Username</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Enter username"
-            value={username}
-            onChange={e => setUsername(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
+    <div className="mb-5 pb-5" style={{ marginTop: "11em" }}>
+      <FormContainer>
+        <Row>
+          <Col md={4} xs={5} className="auth-logo">
+            <p className="special-font display-1">Steak House</p>
+          </Col>{" "}
+          <Col md={8} xs={7} className="">
+            <Form onSubmit={submitHandler}>
+              <Row>
+                <Col xs={6}>
+                  <LinkContainer
+                    to={{
+                      pathname: "/login",
+                      search: redirect ? `?redirect=${redirect}` : ""
+                    }}
+                  >
+                    <Nav.Link>Sign In</Nav.Link>
+                  </LinkContainer>
+                </Col>
+                <Col xs={6}>
+                  <LinkContainer
+                    to={{
+                      pathname: "/register",
+                      search: redirect ? `?redirect=${redirect}` : ""
+                    }}
+                  >
+                    <Nav.Link>Register</Nav.Link>
+                  </LinkContainer>
+                </Col>
+              </Row>
+              <Form.Group className="my-2" controlId="name">
+                <Form.Label>Username</Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="Enter username"
+                  value={username}
+                  onChange={e => setUsername(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
 
-        <Form.Group className="my-2" controlId="password">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Enter password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
-        <Form.Group className="my-2" controlId="confirmPassword">
-          <Form.Label>Confirm Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Confirm password"
-            value={confirmPassword}
-            onChange={e => setConfirmPassword(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
+              <Form.Group className="my-2" controlId="password">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Enter password"
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
+              <Form.Group className="my-2" controlId="confirmPassword">
+                <Form.Label>Confirm Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Confirm password"
+                  value={confirmPassword}
+                  onChange={e => setConfirmPassword(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
 
-        <Button
-          className="mt-2"
-          disabled={isLoading}
-          type="submit"
-          variant="primary"
-        >
-          Register
-        </Button>
+              <button
+                className="mt-2 custom-button"
+                disabled={isLoading}
+                type="submit"
+              >
+                Register
+              </button>
 
-        {isLoading && <Loader />}
-      </Form>
-
-      <Row className="py-3">
-        <Col>
-          Already have an account?{" "}
-          <Link to={redirect ? `/login?redirect=${redirect}` : "/login"}>
-            Login
-          </Link>
-        </Col>
-      </Row>
-    </FormContainer>
+              {isLoading && <Loader />}
+            </Form>
+          </Col>
+        </Row>
+      </FormContainer>
+    </div>
   )
 }
 
