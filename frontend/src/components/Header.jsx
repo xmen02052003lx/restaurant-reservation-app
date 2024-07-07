@@ -76,7 +76,7 @@ const Header = () => {
                 </NavDropdown>
               </>
             ) : (
-              <LinkContainer to="/login">
+              <LinkContainer to="/login" style={{ color: "white" }}>
                 <Nav.Link>
                   <FaUser /> Đăng Nhập
                 </Nav.Link>

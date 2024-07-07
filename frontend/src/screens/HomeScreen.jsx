@@ -25,7 +25,7 @@ import { SiCodechef } from "react-icons/si"
 const HomeScreen = () => {
   return (
     <>
-      <div className="entry">
+      <div className="entry mt-5">
         <div className="image-container">
           <div className="block-superior">
             <Image
@@ -86,13 +86,13 @@ const HomeScreen = () => {
               Đặt bàn
             </button>
             <Row className="pt-5">
-              <Col md={4}>
+              <Col md={4} className="mb-3">
                 <Image src={thitca} fluid />
               </Col>
-              <Col md={4}>
+              <Col md={4} className="mb-3">
                 <Image src={steak} fluid />
               </Col>
-              <Col md={4}>
+              <Col md={4} className="mb-3">
                 <Image src={rautuoi} fluid style={{ height: "100%" }} />
               </Col>
             </Row>
@@ -167,7 +167,7 @@ const HomeScreen = () => {
       </Row>
       <Container className="mb-5">
         <h2 className="text-center mb-5 specialities">Đặc Sản</h2>
-        <Row>
+        <Row className="mb-3">
           <Col md={6}>
             <Row>
               <Col md={4}>
@@ -197,7 +197,7 @@ const HomeScreen = () => {
             </Row>
           </Col>
         </Row>
-        <Row>
+        <Row className="mb-3">
           <Col md={6}>
             <Row>
               <Col md={4}>
@@ -227,7 +227,7 @@ const HomeScreen = () => {
             </Row>
           </Col>
         </Row>
-        <Row>
+        <Row className="mb-3">
           <Col md={6}>
             <Row>
               <Col md={4}>
@@ -259,7 +259,7 @@ const HomeScreen = () => {
         </Row>
       </Container>
       <Container className="image-container">
-        <div className="block-inferior">
+        <div className="block-inferior mb-5">
           <Image className="image-inferior" src={vegetablesTableImage} fluid />
         </div>
         {/* <div className="overlay"></div> */}
