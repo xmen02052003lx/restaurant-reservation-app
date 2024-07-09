@@ -13,12 +13,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
       keepUnusedDataFor: 5,
       providesTags: ["Products"]
     }),
-    getMenuItemDetails: builder.query({
-      query: productId => ({
-        url: `${MENU_URL}/${productId}`
-      }),
-      keepUnusedDataFor: 5
-    }),
+
     createMenu: builder.mutation({
       query: data => ({
         url: `${MENU_URL}/create`,
@@ -27,24 +22,17 @@ export const productsApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Product"] // stop it from being cached so we'll have fresh data
     }),
-    updateMenuItem: builder.mutation({
+    updateMenu: builder.mutation({
       query: data => ({
-        url: `${MENU_URL}/${data.productId}`,
+        url: `${MENU_URL}/update/${data._id}`,
         method: "PUT",
         body: data
       }),
       invalidatesTags: ["Products"]
     }),
-    uploadMenuImage: builder.mutation({
-      query: data => ({
-        url: `/api/upload`,
-        method: "POST",
-        body: data
-      })
-    }),
-    deleteMenuItem: builder.mutation({
+    deleteMenu: builder.mutation({
       query: productId => ({
-        url: `${MENU_URL}/${productId}`,
+        url: `${MENU_URL}/delete/${productId}`,
         method: "DELETE"
       }),
       providesTags: ["Product"]
@@ -56,9 +44,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
 // this is what we bring into our component whenever we want to use this and fetch our data
 export const {
   useGetMenuQuery,
-  useGetMenuItemDetailsQuery,
   useCreateMenuMutation,
   useUpdateMenuMutation,
-  useUploadMenuImageMutation,
   useDeleteMenuMutation
 } = productsApiSlice

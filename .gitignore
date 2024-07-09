@@ -89,3 +89,23 @@ yarn-error.log
 
 # testing
 /coverage
+
+
+
+
+
+
+
+
+
+{
+    "_id": "668531faebe31ee47f4d260f",
+    "dish_code": "adfadf",
+    "name": "adsfadsf",
+    "category": "",
+    "description": "adsfadsf",
+    "unit": "",
+    "price": 123132,
+    "discount": "fdafda",
+    "__v": 0
+}

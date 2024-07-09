@@ -4,7 +4,7 @@ const authRoute = require("./authRoute")
 
 const bookingRoute = require("./bookingRoute")
 const menuRoute = require("./menu")
-const restaurantRoute = require("./restaurantRoute")
+const restaurantRoute = require("./setupRestaurantRoute")
 //  router.use('/auth', userRoute);
 router.use("/user", authRoute)
 router.use("/booking", bookingRoute)

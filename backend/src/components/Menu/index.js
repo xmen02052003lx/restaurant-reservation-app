@@ -1,28 +1,44 @@
 const menu = require("../../models/menu")
+const yup = require("yup")
+const menuSchema = yup.object().shape({
+  price: yup
+    .number()
+    .required("Giá thành là bắt buộc")
+    .min(0, "Giá thành không được nhỏ hơn 0"),
+  discount: yup
+    .number()
+    .min(0, "Tỉ lệ không được nhỏ hơn 0")
+    .max(100, "Tỉ lệ không được lớn hơn 100"),
+  name: yup.string().required("Tên không được bỏ trống"),
+  description: yup.string().required("Giới thiệu không được bỏ trống")
+})
 
 const createMenu = async (req, res) => {
-  const { dish_code, name, category, description, unit, price, discount } =
-    req.body
+  const validate = await menuSchema.validate(req.body)
+  if (validate) {
+    const { dish_code, name, category, description, unit, price, discount } =
+      req.body
 
-  const newMenu = new menu({
-    dish_code,
-    name,
-    category,
-    description,
-    unit,
-    price,
-    discount,
-    image: {
-      data: req.file.buffer.toString("base64"),
-      contentType: req.file.mimetype
+    const newMenu = new menu({
+      dish_code,
+      name,
+      category,
+      description,
+      unit,
+      price,
+      discount,
+      image: {
+        data: req.file.buffer.toString("base64"),
+        contentType: req.file.mimetype
+      }
+    })
+
+    try {
+      await newMenu.save()
+      res.status(201).json({ message: "Món ăn đã được tạo thành công!" })
+    } catch (err) {
+      res.status(500).send(err)
     }
-  })
-
-  try {
-    await newMenu.save()
-    res.status(201).json({ message: "Món ăn đã được tạo thành công!" })
-  } catch (err) {
-    res.status(500).send(err)
   }
 }
 

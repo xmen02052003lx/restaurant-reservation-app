@@ -92,25 +92,34 @@ const HomeScreen = () => {
             </LinkContainer>
             <Row className="pt-5">
               <Col md={4} className="mb-3">
-                <Image src={thitca} fluid />
+                <Image src={thitca} className="object-fit-cover" fluid />
               </Col>
               <Col md={4} className="mb-3">
-                <Image src={steak} fluid />
+                <Image src={steak} className="object-fit-cover" fluid />
               </Col>
               <Col md={4} className="mb-3">
-                <Image src={rautuoi} fluid style={{ height: "100%" }} />
+                <Image
+                  src={rautuoi}
+                  className="object-fit-cover"
+                  fluid
+                  style={{ height: "100%" }}
+                />
               </Col>
             </Row>
           </Col>
           <Col md={6}>
-            <Image src={tableImage} className="tableImage" fluid />
+            <Image
+              src={tableImage}
+              className="tableImage object-fit-cover"
+              fluid
+            />
           </Col>
         </Row>
       </Container>
       <Container>
         <Row className="justify-content-center align-items-center min-vh-100">
           <Col xl={6} className="service">
-            <Image src={plateImage} />
+            <Image src={plateImage} className="object-fit-cover" />
           </Col>
           <Col xl={6} className="service">
             <div>
@@ -178,7 +187,7 @@ const HomeScreen = () => {
           <Col md={6}>
             <Row>
               <Col md={4}>
-                <Image src={pastawithfish} fluid />
+                <Image src={pastawithfish} fluid className="object-fit-cover" />
               </Col>
               <Col md={4} xs={6}>
                 <p className="price">Mì ống cá</p>
