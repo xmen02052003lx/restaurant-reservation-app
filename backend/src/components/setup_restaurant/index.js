@@ -1,5 +1,6 @@
 const Restaurant = require('../../models/restaurants');
 const Table = require('../../models/tables')
+const Order = require('../../models/orders')
 const updateRestaurantInfo = async (req, res) => {
     const { name, address, openTime, closeTime, description, tableCount } = req.body;
   
@@ -57,6 +58,21 @@ const updateRestaurantInfo = async (req, res) => {
     }
   }
 
+  const pickupList = async (req, res) => {
+    try {
+      const order = await Order.findOne({table_id: req.params.id})
+      order.totalPrice = calculateTotalPrice(order.items);
+      res.json(order);
+    } catch (err) {
+      res.status(500).send(err);
+    }
+  }
+
+  const calculateTotalPrice = (items) => {
+    return items.reduce((total, item) => total + item.price * item.quantity, 0);
+  };
+
+
   module.exports = {
-    getRestaurantInfo, updateRestaurantInfo, getTableList
+    getRestaurantInfo, updateRestaurantInfo, getTableList, pickupList
   }
