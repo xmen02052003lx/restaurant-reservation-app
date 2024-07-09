@@ -21,10 +21,10 @@ const updateRestaurantInfo = async (req, res) => {
     try {
       const restaurant = await Restaurant.findByIdAndUpdate(req.params.id, updateData, { new: true });
       const tables = [];
+      await Table.deleteMany({});
       for (let i = 1; i <= number_table; i++) {
         tables.push({
           tableNumber: i,
-          seats: seatsPerTable
         });
       }
       await Table.insertMany(tables);
