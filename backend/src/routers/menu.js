@@ -12,6 +12,7 @@ const {
 router.post("/create", upload.single("image"), createMenu)
 router.put("/update/:id", upload.single("image"), menuUpdate)
 router.delete("/delete/:id", menuDelete)
+router.post("/pick")
 router.get("/", menuList)
 
 module.exports = router

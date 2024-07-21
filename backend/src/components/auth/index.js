@@ -33,9 +33,7 @@ const authentication = async (req, res, next) => {
 }
 const login = async (req, res) => {
   try {
-    console.log(req.body)
     const validate = await signupSchema.validate(req.body)
-    console.log(`validate: ${validate}`)
     if (validate) {
       const { username, password } = req.body
       const user = await User.findOne({ username })

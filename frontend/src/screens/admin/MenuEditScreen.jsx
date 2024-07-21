@@ -69,7 +69,6 @@ const MenuEditScreen = () => {
       </Link>
       <FormContainer>
         <h1>Edit Menu</h1>
-        {loadingUpdate && <Loader />}
 
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="dish_code">
@@ -165,6 +164,7 @@ const MenuEditScreen = () => {
             Update
           </Button>
         </Form>
+        {loadingUpdate && <Loader />}
       </FormContainer>
     </>
   )

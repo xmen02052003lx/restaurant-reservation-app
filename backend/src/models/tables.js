@@ -1,10 +1,19 @@
 const mongoose = require("mongoose")
 
 const MenuSchema = new mongoose.Schema({
-  table_number: {
+  tableNumber: {
     type: String
   },
   status: {
+    type: String
+  },
+  checkinUrl: {
+    type: String
+  },
+  qrCode: {
+    type: String
+  },
+  isOccupied: {
     type: String
   }
 })
