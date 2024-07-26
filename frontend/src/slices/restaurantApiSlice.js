@@ -1,4 +1,4 @@
-import { RESTAURANT_URL, CHECKIN_URL } from "../constants"
+import { RESTAURANT_URL, CHECKIN_URL, PICKUP_URL } from "../constants"
 import { apiSlice } from "./apiSlice" // this slice dealding with asynchronous request so we need apiSlice (createApi)
 
 const restaurantId = "66817d1fdba1724bb5388925"
@@ -35,6 +35,13 @@ export const restaurantApiSlice = apiSlice.injectEndpoints({
         body: table
       }),
       invalidatesTags: ["Products"]
+    }),
+    pickupDish: builder.mutation({
+      query: order => ({
+        url: PICKUP_URL,
+        method: "POST",
+        body: order
+      })
     })
   })
 })
@@ -45,5 +52,6 @@ export const {
   useGetRestaurantDetailsQuery,
   useGetTableListQuery,
   useUpdateRestaurantMutation,
-  useCheckinMutation
+  useCheckinMutation,
+  usePickupDishMutation
 } = restaurantApiSlice

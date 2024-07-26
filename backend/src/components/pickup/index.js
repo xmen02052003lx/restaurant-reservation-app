@@ -12,8 +12,9 @@ const menuList = async (req, res) => {
 
 const pickupDish = async (req, res) => {
   try {
-    const table = await Table.findById(req.params.checkinUrl)
-    const { table_id, item } = req.body
+    const table_id = req.params.checkinUrl
+    const table = await Table.findById(table_id)
+    const { item } = req.body
 
     let order = await Order.findOne({ table_id })
 
@@ -31,7 +32,7 @@ const pickupDish = async (req, res) => {
     }
     order.totalPrice = calculateTotalPrice(order.items)
     await order.save()
-    res.send(order)
+    res.json(order)
   } catch (err) {
     res.status(500).send(err)
   }

@@ -69,7 +69,7 @@ const TableList = () => {
                             Checkin
                           </button>
                         ) : (
-                          <LinkContainer to="/menu">
+                          <LinkContainer to={`/menu/${table._id}`}>
                             <Nav.Link>Order</Nav.Link>
                           </LinkContainer>
                         )}

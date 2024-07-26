@@ -51,7 +51,7 @@ const MenuCreateScreen = () => {
       try {
         await createMenu(formDataWithImage).unwrap()
         toast.success("Item added")
-        navigate("/menu")
+        navigate("/manager/menu")
       } catch (err) {
         toast.error(err?.data?.message || err.error)
       }

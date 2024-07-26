@@ -8,6 +8,7 @@ import Loader from "../components/Loader"
 import Message from "../components/Message"
 import MenuItem from "../components/MenuItem"
 import { useGetMenuQuery } from "../slices/menuApiSlice"
+import PlaceOrder from "../components/PlaceOrder"
 const MenuScreen = () => {
   const { userInfo } = useSelector(state => state.auth)
 
@@ -17,41 +18,17 @@ const MenuScreen = () => {
   const drinkProducts = products?.filter(
     product => product.category === "drinks"
   )
-
   const renderProductRows = products => {
     const rows = []
     for (let i = 0; i < products.length; i += 2) {
-      const imageUrl = `data:${products[i].image.contentType};base64,${products[i].image.data}`
       rows.push(
         <Row key={i}>
           <Col md={6}>
-            <Row className="mb-3">
-              <Col md={4}>
-                <Image
-                  src={imageUrl}
-                  className="object-fit-cover"
-                  fluid
-                  style={{ height: "100%" }}
-                />
-              </Col>
-              <Col md={4}>{products[i].name}</Col>
-              <Col md={4}>{products[i].price}</Col>
-            </Row>
+            <MenuItem product={products[i]} />
           </Col>
           {i + 1 < products.length && (
             <Col md={6}>
-              <Row>
-                <Col md={4}>
-                  <Image
-                    src={imageUrl}
-                    className="object-fit-cover"
-                    fluid
-                    style={{ height: "100%" }}
-                  />
-                </Col>
-                <Col md={4}>{products[i].name}</Col>
-                <Col md={4}>{products[i].price}</Col>
-              </Row>
+              <MenuItem product={products[i + 1]} />
             </Col>
           )}
         </Row>
@@ -72,17 +49,10 @@ const MenuScreen = () => {
       ) : (
         <Container>
           <Row>
-            <Col md={4}>gsdfdsdf</Col>
+            <Col md={4}>
+              <PlaceOrder />
+            </Col>
             <Col md={8}>
-              {/* <Row>
-                <p className="">Thông tin món</p>
-                {products.map(product => (
-                  <Col key={product._id} md={6}>
-                    <MenuItem menu={product} />
-                  </Col>
-                ))}
-              </Row> */}
-
               <h2>Food</h2>
               {renderProductRows(foodProducts)}
 

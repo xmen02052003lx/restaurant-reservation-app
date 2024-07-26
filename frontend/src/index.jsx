@@ -18,7 +18,7 @@ import HomeScreen from "./screens/HomeScreen"
 import LoginScreen from "./screens/LoginScreen"
 import RegisterScreen from "./screens/admin/RegisterScreen"
 import RestaurantInfoEditScreen from "./screens/admin/RestaurantInfoEditScreen"
-import MenuScreen from "./screens/MenuScreen"
+import OrderScreen from "./screens/OrderScreen"
 import MenuCreateScreen from "./screens/admin/MenuCreateScreen"
 import BookingScreen from "./screens/BookingScreen"
 import ThucDonScreen from "./screens/ThucDonScreen"
@@ -33,7 +33,7 @@ const router = createBrowserRouter(
       <Route index={true} path="/" element={<HomeScreen />} />
       <Route path="/login" element={<LoginScreen />} />
       <Route path="/register" element={<RegisterScreen />} />
-      <Route path="/menu" element={<MenuScreen />} />
+      <Route path="/menu/:checkinUrl" element={<OrderScreen />} />
       <Route path="/thucdon" element={<ThucDonScreen />} />
       <Route path="/booking" element={<BookingScreen />} />
       {/* Manager users */}
