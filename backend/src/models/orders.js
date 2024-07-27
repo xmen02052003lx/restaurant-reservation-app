@@ -18,6 +18,16 @@ const MenuSchema = new mongoose.Schema({
       price: { type: Number, required: true }
     }
   ],
+  totalPrice: {
+    type: Number,
+    required: true,
+    default: 0.0
+  },
+  paid: {
+    type: Boolean,
+    required: true,
+    default: false
+  },
   createdAt: { type: Date, default: Date.now }
 })
 

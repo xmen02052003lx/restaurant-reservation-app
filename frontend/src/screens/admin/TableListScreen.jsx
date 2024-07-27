@@ -16,6 +16,7 @@ const TableList = () => {
 
   const checkinHandler = async table => {
     try {
+      console.log("tableId: ", table._id)
       await checkin(table).unwrap()
       toast.success("Checkin successfully")
       refetch()

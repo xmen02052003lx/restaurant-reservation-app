@@ -10,7 +10,8 @@ import MenuItem from "../components/MenuItem"
 import { useGetMenuQuery } from "../slices/menuApiSlice"
 import PlaceOrder from "../components/PlaceOrder"
 const MenuScreen = () => {
-  const { userInfo } = useSelector(state => state.auth)
+  const { checkinUrl } = useParams() // come from the URL
+  console.log(checkinUrl)
 
   const { data: products, isLoading, error } = useGetMenuQuery()
 
@@ -50,7 +51,7 @@ const MenuScreen = () => {
         <Container>
           <Row>
             <Col md={4}>
-              <PlaceOrder />
+              <PlaceOrder checkinUrl={checkinUrl} />
             </Col>
             <Col md={8}>
               <h2>Food</h2>

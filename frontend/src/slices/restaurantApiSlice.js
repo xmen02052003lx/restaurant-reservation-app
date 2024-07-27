@@ -37,10 +37,10 @@ export const restaurantApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ["Products"]
     }),
     pickupDish: builder.mutation({
-      query: order => ({
-        url: PICKUP_URL,
+      query: ({ items, checkinUrl }) => ({
+        url: `${PICKUP_URL}/${checkinUrl}`,
         method: "POST",
-        body: order
+        body: items
       })
     })
   })

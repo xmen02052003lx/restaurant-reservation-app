@@ -8,11 +8,41 @@ import Loader from "../components/Loader"
 import { usePickupDishMutation } from "../slices/restaurantApiSlice"
 import { clearCartItems } from "../slices/cartSilce"
 
-const PlaceOrder = () => {
+const PlaceOrder = ({ checkinUrl }) => {
+  const [pickupDish, { isLoading: loadingPickup, error }] =
+    usePickupDishMutation()
+
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const cart = useSelector(state => state.cart)
+
+  let items = []
+
+  const placeOrderHandler = async () => {
+    try {
+      cart.cartItems.map(item => {
+        items.push({
+          item_id: item._id,
+          quantity: item.qty,
+          name: item.name,
+          price: item.price
+        })
+      })
+      console.log("checkinUrl:", checkinUrl)
+      console.log("items:", items)
+      const res = await pickupDish({
+        items,
+        checkinUrl
+      }).unwrap()
+      dispatch(clearCartItems())
+      toast.success("Order successfully")
+      navigate(`/manager/tablelist`)
+    } catch (err) {
+      console.error(err)
+      toast.error(err)
+    }
+  }
 
   return (
     <>
@@ -25,7 +55,7 @@ const PlaceOrder = () => {
             ) : (
               <ListGroup
                 variant="flush"
-                style={{ maxHeight: "20em", overflowY: "auto" }}
+                style={{ maxHeight: "16em", overflowY: "auto" }}
               >
                 {cart.cartItems.map((item, index) => {
                   const imageUrl = `data:${item.image.contentType};base64,${item.image.data}`
@@ -52,7 +82,25 @@ const PlaceOrder = () => {
               </ListGroup>
             )}
           </ListGroup.Item>
+          <ListGroup.Item>
+            <Row>
+              <Col>Tổng hóa đơn</Col>
+              <Col className="text-center">{cart.itemsPrice}</Col>
+            </Row>
+            <Row>
+              <Col>VAT</Col>
+              <Col className="text-center">{cart.taxPrice}</Col>
+            </Row>
+            <Row className="text-center">
+              <p>SỐ TIỀN CẦN THANH TOÁN:</p>
+              <p>{cart.itemsPrice + cart.taxPrice}</p>
+            </Row>
+            <Row>
+              <Button onClick={placeOrderHandler}>Order</Button>
+            </Row>
+          </ListGroup.Item>
         </ListGroup>
+        {loadingPickup && <Loader />}
       </Card>
     </>
   )

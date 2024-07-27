@@ -10,31 +10,49 @@ const menuList = async (req, res) => {
   }
 }
 
+// Của branch haiduong
+// const pickupDish = async (req, res) => {
+//   try {
+//     const table_id = req.params.checkinUrl
+//     const table = await Table.findById(table_id)
+//     const { item } = req.body
+
+//     let order = await Order.findOne({ table_id })
+
+//     if (!order) {
+//       order = new Order({ table_id, items: [{ ...item, quantity: 1 }] })
+//     } else {
+//       const existingItemIndex = order.items.findIndex(
+//         i => i.item_id.toString() === item.item_id
+//       )
+//       if (existingItemIndex !== -1) {
+//         order.items[existingItemIndex].quantity += 1
+//       } else {
+//         order.items.push({ ...item, quantity: 1 })
+//       }
+//     }
+//     order.totalPrice = calculateTotalPrice(order.items)
+//     await order.save()
+//     res.json(order)
+//   } catch (err) {
+//     res.status(500).send(err)
+//   }
+// }
+
 const pickupDish = async (req, res) => {
   try {
     const table_id = req.params.checkinUrl
-    const table = await Table.findById(table_id)
-    const { item } = req.body
 
-    let order = await Order.findOne({ table_id })
+    const items = req.body
+    const totalPrice = calculateTotalPrice(items)
 
-    if (!order) {
-      order = new Order({ table_id, items: [{ ...item, quantity: 1 }] })
-    } else {
-      const existingItemIndex = order.items.findIndex(
-        i => i.item_id.toString() === item.item_id
-      )
-      if (existingItemIndex !== -1) {
-        order.items[existingItemIndex].quantity += 1
-      } else {
-        order.items.push({ ...item, quantity: 1 })
-      }
-    }
-    order.totalPrice = calculateTotalPrice(order.items)
-    await order.save()
-    res.json(order)
+    let order = new Order({ table_id, items, totalPrice })
+
+    const createdOrder = await order.save()
+
+    res.json(createdOrder)
   } catch (err) {
-    res.status(500).send(err)
+    res.send(err)
   }
 }
 
