@@ -16,4 +16,4 @@ const Restaurant = new mongoose.Schema({
   tableCount: Number
 });
 
-module.exports = mongoose.model("Restaurant", Restaurant);
+module.exports = mongoose.model("restaurants", Restaurant);
