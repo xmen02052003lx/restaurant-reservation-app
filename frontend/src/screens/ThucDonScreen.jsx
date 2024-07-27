@@ -11,6 +11,7 @@ const MenuScreen = () => {
   const { userInfo } = useSelector(state => state.auth)
 
   const { data, isLoading, error } = useGetMenuQuery()
+  console.log(data)
   return (
     <>
       <Link to="/" className="btn btn-light mb-4">

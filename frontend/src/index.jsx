@@ -18,11 +18,14 @@ import HomeScreen from "./screens/HomeScreen"
 import LoginScreen from "./screens/LoginScreen"
 import RegisterScreen from "./screens/admin/RegisterScreen"
 import RestaurantInfoEditScreen from "./screens/admin/RestaurantInfoEditScreen"
-import MenuScreen from "./screens/MenuScreen"
+import OrderScreen from "./screens/OrderScreen"
 import MenuCreateScreen from "./screens/admin/MenuCreateScreen"
 import BookingScreen from "./screens/BookingScreen"
+import ThucDonScreen from "./screens/ThucDonScreen"
 import TableListScreen from "./screens/admin/TableListScreen"
 import BookingListScreen from "./screens/admin/BookingListScreen"
+import MenuList from "./screens/admin/MenuList"
+import MenuEditScreen from "./screens/admin/MenuEditScreen"
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -30,17 +33,20 @@ const router = createBrowserRouter(
       <Route index={true} path="/" element={<HomeScreen />} />
       <Route path="/login" element={<LoginScreen />} />
       <Route path="/register" element={<RegisterScreen />} />
-      <Route path="/menu" element={<MenuScreen />} />
+      <Route path="/menu/:checkinUrl" element={<OrderScreen />} />
+      <Route path="/thucdon" element={<ThucDonScreen />} />
       <Route path="/booking" element={<BookingScreen />} />
       {/* Manager users */}
       <Route path="" element={<ManagerRoute />}>
         <Route
-          path="/manager/editrestaurant"
+          path="/manager/restaurant/:id"
           element={<RestaurantInfoEditScreen />}
         />
         <Route path="/manager/createmenu" element={<MenuCreateScreen />} />
         <Route path="/manager/tablelist" element={<TableListScreen />} />
         <Route path="/manager/bookingslist" element={<BookingListScreen />} />
+        <Route path="/manager/menu" element={<MenuList />} />
+        <Route path="/manager/:id/edit" element={<MenuEditScreen />} />
       </Route>
     </Route>
   )

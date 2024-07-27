@@ -1,12 +1,12 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose")
 
 const UserSchema = new mongoose.Schema({
-    order_id : {
-        type: String
-    },
-    table_id : {
-        type: String
-    },
-});
+  order_id: {
+    type: String
+  },
+  table_id: {
+    type: String
+  }
+})
 
-module.exports = mongoose.model('checkin', UserSchema);
+module.exports = mongoose.model("checkin", UserSchema)

@@ -1,159 +1,158 @@
 import { useState, useEffect } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
-import { Form, Button } from "react-bootstrap"
+import { Form, Button, Container } from "react-bootstrap"
 import Message from "../../components/Message"
 import Loader from "../../components/Loader"
 import FormContainer from "../../components/FormContainer"
 import { toast } from "react-toastify"
-// import {
-//   useGetProductDetailsQuery,
-//   useUpdateProductMutation,
-//   useUploadProductImageMutation
-// } from "../../slices/productsApiSlice"
+import {
+  useGetRestaurantDetailsQuery,
+  useUpdateRestaurantMutation
+} from "../../slices/restaurantApiSlice"
 
 const ProductEditScreen = () => {
-  const { id: productId } = useParams()
-
-  const [name, setName] = useState("")
-  const [address, setAddress] = useState("")
-  const [openingTimes, setOpeningTimes] = useState("")
-  const [image, setImage] = useState("")
-  const [description, setDescription] = useState("")
-
-  //   const {
-  //     data: product,
-  //     isLoading,
-  //     refetch,
-  //     error
-  //   } = useGetProductDetailsQuery(productId)
-
-  //   const [updateProduct, { isLoading: loadingUpdate }] =
-  //     useUpdateProductMutation()
-
-  //   const [uploadProductImage, { isLoading: loadingUpload }] =
-  //     useUploadProductImageMutation()
+  const { id: restaurantId } = useParams()
+  const [restaurant, setRestaurant] = useState({
+    name: "",
+    address: "",
+    openTime: "",
+    closeTime: "",
+    description: "",
+    images: [],
+    number_table: 0
+  })
 
   const navigate = useNavigate()
 
-  //   const submitHandler = async e => {
-  //     e.preventDefault()
-  //     try {
-  //       await updateProduct({
-  //         productId,
-  //         name,
-  //         price,
-  //         image,
-  //         brand,
-  //         category,
-  //         description,
-  //         countInStock
-  //       }).unwrap() // NOTE: here we need to unwrap the Promise to catch any rejection in our catch block
-  //       toast.success("Product updated")
-  //       refetch()
-  //       navigate("/admin/productlist")
-  //     } catch (err) {
-  //       toast.error(err?.data?.message || err.error)
-  //     }
-  //   }
+  const {
+    data: restaurantDetails,
+    isLoading,
+    refetch,
+    error
+  } = useGetRestaurantDetailsQuery(restaurantId)
 
-  //   useEffect(() => {
-  //     if (product) {
-  //       setName(product.name)
-  //       setPrice(product.price)
-  //       setImage(product.image)
-  //       setBrand(product.brand)
-  //       setCategory(product.category)
-  //       setCountInStock(product.countInStock)
-  //       setDescription(product.description)
-  //     }
-  //   }, [product])
+  useEffect(() => {
+    if (restaurantDetails) {
+      setRestaurant(restaurantDetails)
+    }
+  }, [restaurantDetails])
 
-  //   const uploadFileHandler = async e => {
-  //     console.log(e.target.files[0])
-  //     const formData = new FormData()
-  //     formData.append("image", e.target.files[0])
-  //     try {
-  //       const res = await uploadProductImage(formData).unwrap()
-  //       toast.success(res.message)
-  //       setImage(res.image)
-  //     } catch (err) {
-  //       toast.error(err?.data?.message || err.error)
-  //     }
-  //   }
+  const [updateRestaurant, { isLoading: loadingUpdate }] =
+    useUpdateRestaurantMutation()
+
+  const handleChange = e => {
+    const { name, value } = e.target
+    setRestaurant({ ...restaurant, [name]: value })
+  }
+
+  const handleSubmit = async e => {
+    e.preventDefault()
+    try {
+      await updateRestaurant(restaurant)
+      toast.success("Restaurant's details updated")
+      console.log(restaurant)
+      refetch()
+      // navigate("/")
+    } catch (err) {
+      toast.error(err?.data?.message || err.error)
+    }
+  }
 
   return (
-    <>
-      <Link to="/" className="btn btn-light my-3">
-        Go Back
-      </Link>
+    <div className="mt-5 pt-5">
       <FormContainer>
-        <h1>Cập Nhật Thông Tin Nhà Hàng</h1>
-        {/* {loadingUpdate && <Loader />} */}
-        {/* {isLoading ? (
+        <h1>Edit Restaurant Information</h1>
+        {loadingUpdate && <Loader />}
+        {isLoading ? (
           <Loader />
         ) : error ? (
           <Message variant="danger">{error.data.message}</Message>
-        ) : ( */}
-        <Form>
-          <Form.Group controlId="name">
-            <Form.Label>Tên Nhà Hàng</Form.Label>
-            <Form.Control
-              type="name"
-              placeholder="Nhập Tên Nhà Hàng"
-              value={name}
-              onChange={e => setName(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
+        ) : (
+          <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="name">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="name"
+                value={restaurant.name}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
 
-          <Form.Group controlId="address">
-            <Form.Label>Địa Chỉ</Form.Label>
-            <Form.Control
-              type="number"
-              placeholder="Nhập Địa Chỉ Nhà Hàng"
-              value={address}
-              onChange={e => setAddress(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
+            <Form.Group controlId="address">
+              <Form.Label>Address</Form.Label>
+              <Form.Control
+                type="text"
+                name="address"
+                value={restaurant.address}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
 
-          <Form.Group controlId="openingTimes">
-            <Form.Label>Thời Gian Mở Cửa</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Nhập Thời Gian Mở Cửa"
-              value={openingTimes}
-              onChange={e => setOpeningTimes(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
+            <Form.Group controlId="openTime">
+              <Form.Label>Open Time</Form.Label>
+              <Form.Control
+                type="text"
+                name="openTime"
+                value={restaurant.openTime}
+                onChange={handleChange}
+              />
+            </Form.Group>
 
-          <Form.Group controlId="image">
-            <Form.Label>Image</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Nhập địa chỉ URL của hình ảnh"
-              value={image}
-              onChange={e => setImage(e.target.value)}
-            ></Form.Control>
-            <Form.Control label="Choose File" type="file"></Form.Control>
-            {/* {loadingUpload && <Loader />} */}
-          </Form.Group>
+            <Form.Group controlId="closeTime">
+              <Form.Label>Close Time</Form.Label>
+              <Form.Control
+                type="text"
+                name="closeTime"
+                value={restaurant.closeTime}
+                onChange={handleChange}
+              />
+            </Form.Group>
 
-          <Form.Group controlId="description">
-            <Form.Label>Mô Tả</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Nhập Mô Tả"
-              value={description}
-              onChange={e => setDescription(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
+            <Form.Group controlId="description">
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                as="textarea"
+                name="description"
+                value={restaurant.description}
+                onChange={handleChange}
+              />
+            </Form.Group>
 
-          <Button type="submit" variant="primary" style={{ marginTop: "1rem" }}>
-            Update
-          </Button>
-        </Form>
-        {/* ) } */}
+            <Form.Group controlId="images">
+              <Form.Label>Images</Form.Label>
+              <Form.Control
+                type="text"
+                name="images"
+                value={restaurant.images.join(", ")}
+                onChange={e =>
+                  setRestaurant({
+                    ...restaurant,
+                    images: e.target.value.split(", ")
+                  })
+                }
+              />
+            </Form.Group>
+
+            <Form.Group controlId="number_table">
+              <Form.Label>Table Count</Form.Label>
+              <Form.Control
+                type="number"
+                name="number_table"
+                value={restaurant.number_table}
+                onChange={handleChange}
+              />
+            </Form.Group>
+
+            <Button type="submit" variant="primary">
+              Save Changes
+            </Button>
+          </Form>
+        )}
       </FormContainer>
-    </>
+    </div>
   )
 }
 

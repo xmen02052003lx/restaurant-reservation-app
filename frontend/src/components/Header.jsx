@@ -27,7 +27,8 @@ const Header = () => {
         // bg="white"
         style={{
           boxShadow: "4.0px 8.0px 8.0px hsl(0deg 0% 0% / 0.38)",
-          backgroundColor: "#111"
+          backgroundColor: "#111",
+          opacity: "0.95"
         }}
         expand="md"
         collapseOnSelect
@@ -40,8 +41,8 @@ const Header = () => {
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <LinkContainer to="/menu">
+            <Nav className="m-auto">
+              <LinkContainer to="/thucdon">
                 <Nav.Link>
                   <FaBookOpen color="white" />
                   <span style={{ color: "white" }}> THỰC ĐƠN </span>
@@ -61,8 +62,13 @@ const Header = () => {
                   title={userInfo.username}
                   id="username"
                 >
-                  <LinkContainer to="/profile">
-                    <NavDropdown.Item>Profile</NavDropdown.Item>
+                  <LinkContainer to="/manager/restaurant/66817d1fdba1724bb5388925">
+                    <NavDropdown.Item>
+                      Chỉnh Sửa Thông Tin Nhà Hàng
+                    </NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to="/manager/menu">
+                    <NavDropdown.Item>Chỉnh Sửa Thực Đơn</NavDropdown.Item>
                   </LinkContainer>
                   <LinkContainer to="/manager/bookingslist">
                     <NavDropdown.Item>Danh Sách Đặt Bàn</NavDropdown.Item>

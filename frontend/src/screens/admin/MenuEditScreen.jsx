@@ -1,17 +1,15 @@
-import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { useState, useEffect } from "react"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { Form, Button } from "react-bootstrap"
 import Message from "../../components/Message"
 import Loader from "../../components/Loader"
 import FormContainer from "../../components/FormContainer"
 import { toast } from "react-toastify"
-import {
-  useCreateMenuMutation,
-  useGetMenuItemDetailsQuery,
-  useUpdateMenuMutation
-} from "../../slices/menuApiSlice"
+import { useUpdateMenuMutation } from "../../slices/menuApiSlice"
 
-const MenuCreateScreen = () => {
+const MenuEditScreen = () => {
+  const { id: menuId } = useParams()
+
   const [image, setImage] = useState(null)
 
   const [formData, setFormData] = useState({
@@ -36,36 +34,41 @@ const MenuCreateScreen = () => {
     setImage(e.target.files[0])
   }
 
-  const [createMenu, { isLoading: loadingCreate }] = useCreateMenuMutation()
+  const [updateMenu, { isLoading: loadingUpdate }] = useUpdateMenuMutation()
 
   const navigate = useNavigate()
 
   const handleSubmit = async e => {
     e.preventDefault()
-    if (window.confirm("Are you sure you want to create a new product?")) {
-      const formDataWithImage = new FormData()
-      for (const key in formData) {
-        formDataWithImage.append(key, formData[key])
-      }
-      formDataWithImage.append("image", image)
-      try {
-        await createMenu(formDataWithImage).unwrap()
-        toast.success("Item added")
-        navigate("/manager/menu")
-      } catch (err) {
-        toast.error(err?.data?.message || err.error)
-      }
+    const formDataWithImage = new FormData()
+    for (const key in formData) {
+      formDataWithImage.append(key, formData[key])
+    }
+    formDataWithImage.append("image", image)
+    formDataWithImage.append("_id", menuId)
+    // Convert FormData to object
+    const formDataObj = {}
+    formDataWithImage.forEach((value, key) => {
+      formDataObj[key] = value
+    })
+    console.log(formDataObj)
+    console.log(formDataObj._id)
+    try {
+      await updateMenu(formDataObj).unwrap() // NOTE: here we need to unwrap the Promise to catch any rejection in our catch block
+      toast.success("Menu updated")
+      navigate("/manager/menu")
+    } catch (err) {
+      toast.error(err?.data?.message || err.error)
     }
   }
 
   return (
     <>
-      <Link to="/menu" className="btn btn-light my-3">
+      <Link to="/manager/menu" className="btn btn-light my-3">
         Go Back
       </Link>
       <FormContainer>
-        <h1>Tạo Món Mới</h1>
-        {loadingCreate && <Loader />}
+        <h1>Edit Menu</h1>
 
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="dish_code">
@@ -158,12 +161,13 @@ const MenuCreateScreen = () => {
           </Form.Group>
 
           <Button type="submit" variant="primary" style={{ marginTop: "1rem" }}>
-            Tạo Món Mới
+            Update
           </Button>
         </Form>
+        {loadingUpdate && <Loader />}
       </FormContainer>
     </>
   )
 }
 
-export default MenuCreateScreen
+export default MenuEditScreen
