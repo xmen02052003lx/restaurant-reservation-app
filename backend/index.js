@@ -1,4 +1,5 @@
 const path = require("path")
+const port = process.env.PORT || 5000
 const connectdb = require("./src/helpers/db")
 const express = require("express")
 const cors = require("cors")
@@ -22,4 +23,4 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // connectToDB();
-app.listen(5000)
+app.listen(port)
