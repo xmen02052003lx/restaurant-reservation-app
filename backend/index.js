@@ -11,5 +11,14 @@ app.use(bodyParser.json())
 app.use(Router)
 
 connectdb()
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "/frontend/build")))
+  app.get(
+    "*",
+    (req, res) =>
+      res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html")) // load the index.html file that's in the frontend/builder folder which we just made static
+  )
+}
+
 // connectToDB();
 app.listen(5000)

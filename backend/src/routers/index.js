@@ -15,4 +15,5 @@ router.use("/restaurant", restaurantRoute)
 router.use("/checkin", checkin)
 router.use("/pickup", pickup)
 router.use("/bill", billRoute)
+
 module.exports = router
