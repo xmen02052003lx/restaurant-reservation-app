@@ -1,18 +1,19 @@
 import "./LoginScreen.css"
 import { useState, useEffect } from "react"
-import { Link, useLocation, useNavigate } from "react-router-dom"
-import { Form, Button, Row, Col, Nav } from "react-bootstrap"
+import { useLocation, useNavigate } from "react-router-dom"
+import { Form, Row, Col } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import Loader from "../components/Loader"
 import FormContainer from "../components/FormContainer"
 import { useLoginMutation } from "../slices/usersApiSlice"
 import { setCredentials } from "../slices/authSlice"
 import { toast } from "react-toastify"
-import { LinkContainer } from "react-router-bootstrap"
 
 const LoginScreen = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+  const [errors, setErrors] = useState({})
+  const [success, setSuccess] = useState({})
 
   const dispatch = useDispatch() // useDispatch: dispatch actions such as the login in that slice and the set credentials
   const navigate = useNavigate()
@@ -34,15 +35,57 @@ const LoginScreen = () => {
     }
   }, [navigate, redirect, userInfo])
 
+  const validate = () => {
+    const errors = {}
+    const success = {}
+    if (!username) {
+      errors.username = "Email is required"
+    } else if (!/\S+@\S+\.\S+/.test(username)) {
+      errors.username = "Email address is invalid"
+    } else {
+      success.username = "Email looks good!"
+    }
+
+    if (!password) {
+      errors.password = "Password is required"
+    } else if (password.length < 6) {
+      errors.password = "Password must be at least 8 characters"
+    } else {
+      success.password = "Password looks good!"
+    }
+    return { errors, success }
+  }
+
   const submitHandler = async e => {
     e.preventDefault()
+    const { errors, success } = validate()
+    setErrors(errors)
+    setSuccess(success)
+
+    if (Object.keys(errors).length > 0) {
+      return
+    }
     try {
       const res = await login({ username, password }).unwrap()
       dispatch(setCredentials({ ...res }))
       navigate(redirect)
     } catch (err) {
-      toast.error(err?.data?.message || err.error)
+      toast.error("Wrong email or password")
     }
+  }
+
+  const handleUsernameChange = e => {
+    setUsername(e.target.value)
+    const { errors, success } = validate()
+    setErrors(prev => ({ ...prev, username: errors.username }))
+    setSuccess(prev => ({ ...prev, username: success.username }))
+  }
+
+  const handlePasswordChange = e => {
+    setPassword(e.target.value)
+    const { errors, success } = validate()
+    setErrors(prev => ({ ...prev, password: errors.password }))
+    setSuccess(prev => ({ ...prev, password: success.password }))
   }
 
   return (
@@ -54,36 +97,27 @@ const LoginScreen = () => {
           </Col>{" "}
           <Col md={8} xs={7} className="">
             <Form onSubmit={submitHandler} className="mt-5 pt-5">
-              <Row>
-                <Col xs={6}>
-                  <LinkContainer
-                    to={{
-                      pathname: "/login",
-                      search: redirect ? `?redirect=${redirect}` : ""
-                    }}
-                  >
-                    <Nav.Link>Sign In</Nav.Link>
-                  </LinkContainer>
-                </Col>
-                <Col xs={6}>
-                  <LinkContainer
-                    to={{
-                      pathname: "/register",
-                      search: redirect ? `?redirect=${redirect}` : ""
-                    }}
-                  >
-                    <Nav.Link>Register</Nav.Link>
-                  </LinkContainer>
-                </Col>
-              </Row>
+              <h1>Sign In</h1>
               <Form.Group className="my-2" controlId="email">
                 <Form.Label>Email Address</Form.Label>
                 <Form.Control
                   type="email"
                   placeholder="Enter email"
                   value={username}
-                  onChange={e => setUsername(e.target.value)}
+                  onChange={handleUsernameChange}
+                  isInvalid={!!errors.username}
+                  isValid={!!success.username}
                 ></Form.Control>
+                {errors.username && (
+                  <Form.Control.Feedback type="invalid">
+                    {errors.username}
+                  </Form.Control.Feedback>
+                )}
+                {success.username && (
+                  <Form.Control.Feedback type="valid">
+                    {success.username}
+                  </Form.Control.Feedback>
+                )}
               </Form.Group>
 
               <Form.Group className="my-2" controlId="password">
@@ -92,8 +126,20 @@ const LoginScreen = () => {
                   type="password"
                   placeholder="Enter password"
                   value={password}
-                  onChange={e => setPassword(e.target.value)}
+                  onChange={handlePasswordChange}
+                  isInvalid={!!errors.password}
+                  isValid={!!success.password}
                 ></Form.Control>
+                {errors.password && (
+                  <Form.Control.Feedback type="invalid">
+                    {errors.password}
+                  </Form.Control.Feedback>
+                )}
+                {success.password && (
+                  <Form.Control.Feedback type="valid">
+                    {success.password}
+                  </Form.Control.Feedback>
+                )}
               </Form.Group>
 
               <button

@@ -1,5 +1,7 @@
 const router = require("express").Router()
-const { saveBill, getBill } = require("../components/bills")
-router.get("/bill/:tableId", getBill)
-router.post("/bill/pay/:tableId", saveBill)
+const { saveBill, getBill, getBills } = require("../components/bills")
+
+router.get("/:orderId", getBill)
+router.get("/", getBills)
+router.put("/pay/:orderId", saveBill)
 module.exports = router

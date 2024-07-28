@@ -26,6 +26,8 @@ import TableListScreen from "./screens/admin/TableListScreen"
 import BookingListScreen from "./screens/admin/BookingListScreen"
 import MenuList from "./screens/admin/MenuList"
 import MenuEditScreen from "./screens/admin/MenuEditScreen"
+import OrderListScreen from "./screens/admin/OrderListScreen"
+import OrderDetailScreen from "./screens/admin/OrderDetailScreen"
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -47,6 +49,8 @@ const router = createBrowserRouter(
         <Route path="/manager/bookingslist" element={<BookingListScreen />} />
         <Route path="/manager/menu" element={<MenuList />} />
         <Route path="/manager/:id/edit" element={<MenuEditScreen />} />
+        <Route path="/manager/orderlist" element={<OrderListScreen />} />
+        <Route path="/manager/bill/:id" element={<OrderDetailScreen />} />
       </Route>
     </Route>
   )

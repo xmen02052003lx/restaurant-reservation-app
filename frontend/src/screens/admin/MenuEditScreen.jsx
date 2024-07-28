@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { Form, Button } from "react-bootstrap"
-import Message from "../../components/Message"
 import Loader from "../../components/Loader"
 import FormContainer from "../../components/FormContainer"
 import { toast } from "react-toastify"
@@ -22,16 +21,49 @@ const MenuEditScreen = () => {
     discount: ""
   })
 
+  const [errors, setErrors] = useState({})
+  const [success, setSuccess] = useState({})
+
   const handleChange = e => {
     const { name, value } = e.target
     setFormData({
       ...formData,
       [name]: value
     })
+    validateField(name, value)
   }
 
   const handleFileChange = e => {
     setImage(e.target.files[0])
+  }
+
+  const validateField = (name, value) => {
+    const errors = {}
+    const success = {}
+
+    switch (name) {
+      case "price":
+        if (isNaN(value) || value <= 0) {
+          errors.price = "Price must be a positive number"
+        } else {
+          success.price = "Price looks good!"
+        }
+        break
+      case "discount":
+        if (isNaN(value) || value < 0 || value > 100) {
+          errors.discount =
+            "Discount must be a non-negative number and equal to or less than 100"
+        } else {
+          success.discount = "Discount looks good!"
+        }
+        break
+
+      default:
+        break
+    }
+
+    setErrors(prev => ({ ...prev, [name]: errors[name] }))
+    setSuccess(prev => ({ ...prev, [name]: success[name] }))
   }
 
   const [updateMenu, { isLoading: loadingUpdate }] = useUpdateMenuMutation()
@@ -100,7 +132,19 @@ const MenuEditScreen = () => {
               placeholder="Enter price"
               value={formData.price}
               onChange={handleChange}
+              isInvalid={!!errors.price}
+              isValid={!!success.price}
             ></Form.Control>
+            {errors.price && (
+              <Form.Control.Feedback type="invalid">
+                {errors.price}
+              </Form.Control.Feedback>
+            )}
+            {success.price && (
+              <Form.Control.Feedback type="valid">
+                {success.price}
+              </Form.Control.Feedback>
+            )}
           </Form.Group>
           <Form.Group controlId="discount">
             <Form.Label>Discount</Form.Label>
@@ -110,7 +154,19 @@ const MenuEditScreen = () => {
               placeholder="Enter discount"
               value={formData.discount}
               onChange={handleChange}
+              isInvalid={!!errors.discount}
+              isValid={!!success.discount}
             ></Form.Control>
+            {errors.discount && (
+              <Form.Control.Feedback type="invalid">
+                {errors.discount}
+              </Form.Control.Feedback>
+            )}
+            {success.discount && (
+              <Form.Control.Feedback type="valid">
+                {success.discount}
+              </Form.Control.Feedback>
+            )}
           </Form.Group>
 
           <Form.Group controlId="image">

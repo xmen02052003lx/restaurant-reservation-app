@@ -1,4 +1,3 @@
-import { useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap"
@@ -9,8 +8,7 @@ import { usePickupDishMutation } from "../slices/restaurantApiSlice"
 import { clearCartItems } from "../slices/cartSilce"
 
 const PlaceOrder = ({ checkinUrl }) => {
-  const [pickupDish, { isLoading: loadingPickup, error }] =
-    usePickupDishMutation()
+  const [pickupDish, { isLoading: loadingPickup }] = usePickupDishMutation()
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -31,7 +29,7 @@ const PlaceOrder = ({ checkinUrl }) => {
       })
       console.log("checkinUrl:", checkinUrl)
       console.log("items:", items)
-      const res = await pickupDish({
+      await pickupDish({
         items,
         checkinUrl
       }).unwrap()

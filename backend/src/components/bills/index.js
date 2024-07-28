@@ -1,22 +1,26 @@
 const Order = require("../../models/orders")
 const Bill = require("../../models/bills")
 
+const getBills = async (req, res) => {
+  try {
+    const orders = await Order.find({}).populate("table_id", "id qrCode")
+    res.json(orders)
+  } catch (error) {
+    res.send(err)
+  }
+}
+
 const getBill = async (req, res) => {
   try {
-    const { tableId } = req.params
-
-    const order = await Order.findOne({ tableId, paid: false })
+    console.log("first test !!!!")
+    const order = await Order.findById(req.params.orderId)
+      .populate("table_id", "id qrCode")
+      .populate("items.item_id", "image")
     if (!order) {
       return res.status(404).send("Order not found")
     }
 
-    order.totalPrice = calculateTotalPrice(order.items)
-
-    res.send({
-      tableId: order.tableId,
-      items: order.items,
-      totalPrice: order.totalPrice
-    })
+    res.json(order)
   } catch (err) {
     res.status(500).send(err)
   }
@@ -24,26 +28,17 @@ const getBill = async (req, res) => {
 
 const saveBill = async (req, res) => {
   try {
-    const { tableId } = req.params
-
-    const order = await Order.findOne({ tableId, paid: false })
+    const order = await Order.findById(req.params.orderId)
     if (!order) {
       return res.status(404).send("Order not found")
     }
 
-    // Lưu thông tin hóa đơn vào bảng hóa đơn
-    const bill = new Bill({
-      tableId: order.tableId,
-      items: order.items,
-      totalPrice: order.totalPrice
-    })
-    await bill.save()
-
     // Đánh dấu đơn hàng là đã thanh toán
     order.paid = true
-    await order.save()
+    order.paidAt = Date.now()
+    const updatedOrder = await order.save()
 
-    res.send(bill)
+    res.json(updatedOrder)
   } catch (err) {
     res.status(500).send(err)
   }
@@ -53,7 +48,8 @@ const calculateTotalPrice = items => {
   return items.reduce((total, item) => total + item.price * item.quantity, 0)
 }
 
-module.export = {
+module.exports = {
   saveBill,
-  getBill
+  getBill,
+  getBills
 }

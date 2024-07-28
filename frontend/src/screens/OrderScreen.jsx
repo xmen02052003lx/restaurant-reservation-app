@@ -1,19 +1,15 @@
 import { useParams, Link } from "react-router-dom"
-import { Table, Button, Row, Col, Container } from "react-bootstrap"
-import Image from "react-bootstrap/Image"
-import { FaDeaf, FaEdit, FaPlus, FaTrash } from "react-icons/fa"
-import { useDispatch, useSelector } from "react-redux"
-import { LinkContainer } from "react-router-bootstrap"
+import { Row, Col, Container } from "react-bootstrap"
 import Loader from "../components/Loader"
-import Message from "../components/Message"
 import MenuItem from "../components/MenuItem"
 import { useGetMenuQuery } from "../slices/menuApiSlice"
 import PlaceOrder from "../components/PlaceOrder"
+import "./ThucDonScreen.css"
 const MenuScreen = () => {
   const { checkinUrl } = useParams() // come from the URL
   console.log(checkinUrl)
 
-  const { data: products, isLoading, error } = useGetMenuQuery()
+  const { data: products, isLoading } = useGetMenuQuery()
 
   const foodProducts = products?.filter(product => product.category === "food")
   const drinkProducts = products?.filter(
@@ -54,10 +50,10 @@ const MenuScreen = () => {
               <PlaceOrder checkinUrl={checkinUrl} />
             </Col>
             <Col md={8}>
-              <h2>Food</h2>
+              <h2 className="menu-header">Food</h2>
               {renderProductRows(foodProducts)}
 
-              <h2>Drinks</h2>
+              <h2 className="menu-header">Drinks</h2>
               {renderProductRows(drinkProducts)}
             </Col>
           </Row>

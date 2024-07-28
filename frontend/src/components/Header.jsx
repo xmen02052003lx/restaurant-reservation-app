@@ -1,5 +1,5 @@
-import { Navbar, Nav, Container, Badge, NavDropdown } from "react-bootstrap"
-import { FaShoppingCart, FaUser, FaBookOpen, FaTable } from "react-icons/fa"
+import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap"
+import { FaUser, FaBookOpen, FaTable } from "react-icons/fa"
 import { LinkContainer } from "react-router-bootstrap"
 import { useSelector, useDispatch } from "react-redux" // useDispatch is used to interact with our state's actions, and useSelector is used to access our state in the store.js
 import { useNavigate } from "react-router-dom"
@@ -75,6 +75,9 @@ const Header = () => {
                   </LinkContainer>
                   <LinkContainer to="/manager/tablelist">
                     <NavDropdown.Item>Số Bàn</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to="/manager/orderlist">
+                    <NavDropdown.Item>Orders</NavDropdown.Item>
                   </LinkContainer>
                   <NavDropdown.Item onClick={logoutHandler}>
                     Logout

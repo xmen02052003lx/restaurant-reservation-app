@@ -1,20 +1,17 @@
 import { useEffect, useState } from "react"
-import { Card, Form, Button, Row, Col, Image } from "react-bootstrap"
-import { useParams, useNavigate } from "react-router-dom"
+import { Button, Row, Col, Image } from "react-bootstrap"
 import { FaPlus } from "react-icons/fa"
-import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { toast } from "react-toastify"
 import { addToCart } from "../slices/cartSilce"
 
-const MenuItem = ({ product }) => {
+const MenuItem = ({ product, justShow }) => {
+  console.log("product.image.contentType:", product)
   const imageUrl = `data:${product.image.contentType};base64,${product.image.data}`
 
   const cart = useSelector(state => state.cart)
   console.log("cart")
   console.log(cart)
   const dispatch = useDispatch()
-  const navigate = useNavigate()
 
   let [qty, setQty] = useState(0)
 
@@ -55,11 +52,22 @@ const MenuItem = ({ product }) => {
         <p className="fw-bold">{product.name}</p>
       </Col>
       <Col md={4}>
-        <p>{product.price}</p>
-        {qty}
-        <Button variant="primary" className="btn-sm" onClick={addToCartHandler}>
-          <FaPlus />
-        </Button>
+        <p style={{ color: "orange", fontWeight: "bold" }}>
+          {product.price} <span>đ</span>
+        </p>
+        {!justShow && (
+          <>
+            <span className="p-2">{qty}</span>
+
+            <Button
+              variant="primary"
+              className="btn-sm"
+              onClick={addToCartHandler}
+            >
+              <FaPlus />
+            </Button>
+          </>
+        )}
       </Col>
     </Row>
   )

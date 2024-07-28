@@ -10,7 +10,7 @@ const MenuSchema = new mongoose.Schema({
     {
       item_id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "menus",
+        ref: "Menu",
         required: true
       },
       quantity: { type: Number, required: true },
@@ -27,6 +27,9 @@ const MenuSchema = new mongoose.Schema({
     type: Boolean,
     required: true,
     default: false
+  },
+  paidAt: {
+    type: Date
   },
   createdAt: { type: Date, default: Date.now }
 })
