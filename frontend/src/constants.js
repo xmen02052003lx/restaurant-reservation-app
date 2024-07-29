@@ -1,6 +1,6 @@
 export const BASE_URL = ""
 export const MENU_URL = "/menu"
-export const USERS_URL = "http://localhost:5000/user"
+export const USERS_URL = "/user"
 export const BOOKING_URL = "/booking"
 export const RESTAURANT_URL = "/restaurant"
 export const CHECKIN_URL = "/checkin"
